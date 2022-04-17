@@ -605,6 +605,12 @@ impl futures_util::stream::Stream for Datagrams {
     }
 }
 
+impl Clone for Datagrams {
+    fn clone(&self) -> Self {
+        Datagrams(self.0.clone())
+    }
+}
+
 /// A future that will resolve into an opened outgoing unidirectional stream
 #[must_use = "futures/streams/sinks do nothing unless you `.await` or poll them"]
 pub struct OpenUni {

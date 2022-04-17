@@ -85,11 +85,7 @@ fn log_sendmsg_error(
     err: impl core::fmt::Debug,
     transmit: &Transmit,
 ) {
-    let now = Instant::now();
-    if now.saturating_duration_since(*last_send_error) > IO_ERROR_LOG_INTERVAL {
-        *last_send_error = now;
-        warn!(
+    warn!(
         "sendmsg error: {:?}, Transmit: {{ destination: {:?}, src_ip: {:?}, enc: {:?}, len: {:?}, segment_size: {:?} }}",
             err, transmit.destination, transmit.src_ip, transmit.ecn, transmit.contents.len(), transmit.segment_size);
-    }
 }

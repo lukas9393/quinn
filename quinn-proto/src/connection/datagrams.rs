@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 
 use bytes::Bytes;
 use thiserror::Error;
-use tracing::{debug, trace};
+use tracing::{debug, trace, warn};
 
 use super::Connection;
 use crate::{
@@ -34,7 +34,7 @@ impl<'a> Datagrams<'a> {
                 .outgoing
                 .pop_front()
                 .expect("datagrams.outgoing_total desynchronized");
-            trace!(len = prev.data.len(), "dropping outgoing datagram");
+            warn!(len = prev.data.len(), "dropping outgoing datagram");
             self.conn.datagrams.outgoing_total -= prev.data.len();
         }
         if data.len() > max {
